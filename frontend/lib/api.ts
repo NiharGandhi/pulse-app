@@ -55,7 +55,9 @@ async function apiFetch<T>(
   };
 
   const res = await fetch(`${BASE_URL}${path}`, { ...fetchOptions, headers });
-  const json = (await res.json()) as ApiResponse<T>;
+  const text = await res.text();
+  if (!text) return { success: false, error: "Empty response from server" };
+  const json = JSON.parse(text) as ApiResponse<T>;
   return json;
 }
 
