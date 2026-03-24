@@ -1,0 +1,186 @@
+@import "tailwindcss";
+
+/* ── Design tokens ──────────────────────────────────────────────────────────
+   Change here → changes everywhere. No hunting through components.
+   ─────────────────────────────────────────────────────────────────────────── */
+:root {
+  /* Backgrounds */
+  --bg:          #FAF9F7;
+  --surface:     #FFFFFF;
+  --surface-2:   #F2F0ED;
+  --surface-3:   #EAE7E3;
+
+  /* Borders */
+  --border:      #E2DDD8;
+  --border-2:    #CEC8C1;
+
+  /* Text */
+  --text:        #1A1714;
+  --text-2:      #6E6760;
+  --text-3:      #AFA89F;
+
+  /* Accent */
+  --lime:        #C8FF00;
+  --lime-text:   #4E6200;   /* lime as readable text on --bg */
+  --lime-bg:     #F0FFB3;   /* lime as subtle tinted surface */
+
+  /* Semantic */
+  --open:        #2E7D32;
+  --closed:      #C0392B;
+  --live:        #22c55e;
+
+  /* Shadows */
+  --shadow-card: 0 1px 3px rgba(0,0,0,0.06), 0 1px 8px rgba(0,0,0,0.04);
+}
+
+@theme inline {
+  --font-display: "Space Grotesk", system-ui, sans-serif;
+  --font-serif:   "Instrument Serif", Georgia, serif;
+  --font-body:    "DM Sans", system-ui, sans-serif;
+}
+
+/* ── Base reset ──────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: "DM Sans", var(--font-body), system-ui, sans-serif;
+  font-size: 15px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Headings */
+h1, h2, h3, h4, h5, h6 {
+  font-family: "Space Grotesk", var(--font-display), system-ui, sans-serif;
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  color: var(--text);
+}
+
+/* ── Inputs & forms ──────────────────────────────────────── */
+input, textarea, select, button {
+  font-family: inherit;
+}
+
+input, textarea, select {
+  color: var(--text);
+  background: transparent;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: var(--text-3);
+}
+
+/* ── Text selection ──────────────────────────────────────── */
+::selection {
+  background: var(--lime);
+  color: var(--text);
+}
+
+/* ── Links ───────────────────────────────────────────────── */
+a { color: inherit; }
+
+/* ── Utility classes ─────────────────────────────────────── */
+.serif {
+  font-family: "Instrument Serif", var(--font-serif), Georgia, serif;
+}
+
+/* Page wrapper — apply to every page's root div */
+.page {
+  min-height: 100vh;
+  background-color: var(--bg);
+  color: var(--text);
+}
+
+/* Surface card */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-card);
+}
+
+/* Input field */
+.input-field {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text);
+  border-radius: 9999px;
+  padding: 10px 18px;
+  font-size: 14px;
+  transition: border-color 0.15s;
+  outline: none;
+}
+.input-field:focus {
+  border-color: var(--border-2);
+}
+
+/* Muted label */
+.label-muted {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-3);
+  font-weight: 500;
+}
+
+/* ── Scrollbar hide ─────────────────────────────────────── */
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* ── Color utilities ─────────────────────────────────────
+   Use these instead of Tailwind color tokens — the design
+   tokens above are CSS vars, not Tailwind theme values.
+   ─────────────────────────────────────────────────────── */
+.text-primary   { color: var(--text); }
+.text-secondary { color: var(--text-2); }
+.text-muted     { color: var(--text-3); }
+.text-lime      { color: var(--lime-text); }
+
+.bg-surface     { background: var(--surface); }
+.bg-surface-2   { background: var(--surface-2); }
+.bg-surface-3   { background: var(--surface-3); }
+.bg-lime        { background: var(--lime); }
+
+/* Surface card variant with shadow */
+.card-surface {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-card);
+}
+
+/* ── On-photo text (for cards with dark image overlay) ───
+   Use on any text rendered over a photo/dark gradient.
+   ─────────────────────────────────────────────────────── */
+.photo-text       { color: #ffffff; }
+.photo-text-muted { color: rgba(255,255,255,0.70); }
+.photo-text-dim   { color: rgba(255,255,255,0.45); }
+
+/* ── Live badge ──────────────────────────────────────────── */
+.live-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  border-radius: 9999px;
+  padding: 4px 10px;
+  font-size: 11px;
+  font-weight: 600;
+  background: rgba(200,255,0,0.15);
+  border: 1px solid rgba(200,255,0,0.3);
+  color: var(--lime-text);
+}
+
+/* ── Pill tag (vibe / busy level) ───────────────────────── */
+.vibe-pill {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 9999px;
+  padding: 2px 10px;
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: capitalize;
+}
