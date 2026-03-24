@@ -16,14 +16,22 @@ import profileRouter from "./routes/profile.js";
 
 const app = new Hono();
 
-// CORS — allow frontend dev origin
+// CORS — allow frontend origins
+const allowedOrigins = [
+  "http://localhost:3000",
+  ...(process.env["FRONTEND_URL"] ? [process.env["FRONTEND_URL"]] : []),
+];
+
 app.use(
   "*",
   cors({
-    origin: [
-      "http://localhost:3000",
-      process.env["FRONTEND_URL"] ?? "http://localhost:3000",
-    ],
+    origin: (origin) => {
+      if (!origin) return origin;
+      if (allowedOrigins.includes(origin)) return origin;
+      // Allow any Vercel preview deployment for this project
+      if (origin.endsWith(".vercel.app")) return origin;
+      return null;
+    },
     allowMethods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowHeaders: ["Content-Type", "Authorization"],
     credentials: true,
