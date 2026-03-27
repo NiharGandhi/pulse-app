@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef } from "react";
+import { usePathname } from "next/navigation";
 import { Sparkles, X, Send, MapPin, Star, ArrowRight } from "lucide-react";
 import { vibeSearch, type VibeSearchResult } from "@/lib/api";
 import { cn } from "@/lib/utils";
@@ -25,7 +26,10 @@ const TAG_COLORS: Record<string, string> = {
 };
 
 export function AIConcierge() {
+  const pathname = usePathname();
   const [open, setOpen] = useState(false);
+
+  if (pathname === "/") return null;
   const [query, setQuery] = useState("");
   const [loading, setLoading] = useState(false);
   const [results, setResults] = useState<VibeSearchResult[] | null>(null);
